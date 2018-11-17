@@ -6,6 +6,48 @@ CREATE OR REPLACE PACKAGE BODY procedures AS
 			SELECT *
 			FROM students;
 	END;
+	PROCEDURE show_Classes(recordsets out sys_refcursor) IS
+	BEGIN
+    		/* Display All Classes */
+		OPEN recordsets FOR
+			SELECT *
+			FROM Classes;
+	END;
+	PROCEDURE show_TAs(recordsets out sys_refcursor) IS
+	BEGIN
+    		/* Display All TAs*/
+		OPEN recordsets FOR
+			SELECT *
+			FROM TAs;
+	END;
+	PROCEDURE show_Courses(recordsets out sys_refcursor) IS
+	BEGIN
+    		/* Display All Courses */
+		OPEN recordsets FOR
+			SELECT *
+			FROM Courses;
+	END;
+	PROCEDURE show_Enrollement(recordsets out sys_refcursor) IS
+	BEGIN
+    		/* Display All Enrollements */
+		OPEN recordsets FOR
+			SELECT *
+			FROM Enrollements;
+	END;
+	PROCEDURE show_Prerequisite(recordsets out sys_refcursor) IS
+	BEGIN
+    		/* Display All Prerequisites */
+		OPEN recordsets FOR
+			SELECT *
+			FROM Prerequisites;
+	END;
+	PROCEDURE show_Logs(recordsets out sys_refcursor) IS
+	BEGIN
+    		/* Display All Logs */
+		OPEN recordsets FOR
+			SELECT *
+			FROM Logs;
+	END;
 	
 	PROCEDURE show_ClassTA(class_id in classes.classid%type,errorMsg out varchar2,recordsets out sys_refcursor) IS
 	class_count number;

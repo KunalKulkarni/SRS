@@ -15,7 +15,7 @@ public class Driver {
 	public static void main(String[] args) throws SQLException {
 		OracleDataSource ds = new oracle.jdbc.pool.OracleDataSource();
 		ds.setURL("jdbc:oracle:thin:@castor.cc.binghamton.edu:1521:ACAD111");
-		conn = ds.getConnection("kkulkar3", "kunal2795");
+		conn = ds.getConnection("raney1", "Shonirocker1");
 
 		Scanner sc = new Scanner(System.in);
 		int choice;
@@ -32,9 +32,28 @@ public class Driver {
 				System.out.println("4.Display Classes Table");
 				System.out.println("5.Display Enrollments Table");
 				System.out.println("6.Display Logs Table");
+				System.out.println("7.Display TA Table");
 				tChoice = sc.nextInt();
 				if (tChoice == 1) {
 					displayStudents(conn);
+				}
+				if (tChoice == 2) {
+					displayCourses(conn);
+				}
+				if (tChoice == 3) {
+					 displayPrerequisite(conn);
+				}
+				if (tChoice == 4) {
+					 displayClasses(conn);
+				}
+				if (tChoice == 5) {
+					displayEnrollement(conn);
+				}
+				if (tChoice == 6) {
+					displayLogs(conn);
+				}
+				if (tChoice == 7) {
+					displayTAs(conn);
 				}
 			}
 			if (choice == 2) {
@@ -126,5 +145,110 @@ public class Driver {
 		}
 		return rs;
 	}
+	private static ResultSet displayClasses(Connection conn2) throws SQLException {
+		CallableStatement cs = conn.prepareCall("{ call procedures.show_Classes(?) }");
+		cs.registerOutParameter(1, OracleTypes.CURSOR);
+		cs.execute();
+		ResultSet rs = (ResultSet) cs.getObject(1);
+		if (rs != null) {
+			ResultSetMetaData meta = rs.getMetaData();
+			System.out.println(
+					"\n" + meta.getColumnName(1) + "\t" + meta.getColumnName(2) + "\t" + meta.getColumnName(3) + "\t"
+							+ meta.getColumnName(4) + "\t" + meta.getColumnName(5) + "\t" + meta.getColumnName(6)+ "\t" + meta.getColumnName(7) + "\t" + meta.getColumnName(8));
+			while (rs.next()) {
+				System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t"
+						+ rs.getString(4) + "\t" + rs.getDouble(5) + "\t" + rs.getString(6)+ "\t" + rs.getDouble(7) + "\t" + rs.getString(8));
+			}
+
+		}
+		return rs;
+	}
+	private static ResultSet displayTAs(Connection conn2) throws SQLException {
+		CallableStatement cs = conn.prepareCall("{ call procedures.show_TAs(?) }");
+		cs.registerOutParameter(1, OracleTypes.CURSOR);
+		cs.execute();
+		ResultSet rs = (ResultSet) cs.getObject(1);
+		if (rs != null) {
+			ResultSetMetaData meta = rs.getMetaData();
+			System.out.println(
+					"\n" + meta.getColumnName(1) + "\t" + meta.getColumnName(2) + "\t" + meta.getColumnName(3));
+			while (rs.next()) {
+				System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3));
+			}
+
+		}
+		return rs;
+	}
+	private static ResultSet displayCourses(Connection conn2) throws SQLException {
+		CallableStatement cs = conn.prepareCall("{ call procedures.show_Courses(?) }");
+		cs.registerOutParameter(1, OracleTypes.CURSOR);
+		cs.execute();
+		ResultSet rs = (ResultSet) cs.getObject(1);
+		if (rs != null) {
+			ResultSetMetaData meta = rs.getMetaData();
+			System.out.println(
+					"\n" + meta.getColumnName(1) + "\t" + meta.getColumnName(2) + "\t" + meta.getColumnName(3));
+			while (rs.next()) {
+				System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3));
+			}
+
+		}
+		return rs;
+	}
+	private static ResultSet displayEnrollement(Connection conn2) throws SQLException {
+		CallableStatement cs = conn.prepareCall("{ call procedures.show_Enrollement(?) }");
+		cs.registerOutParameter(1, OracleTypes.CURSOR);
+		cs.execute();
+		ResultSet rs = (ResultSet) cs.getObject(1);
+		if (rs != null) {
+			ResultSetMetaData meta = rs.getMetaData();
+			System.out.println(
+					"\n" + meta.getColumnName(1) + "\t" + meta.getColumnName(2) + "\t" + meta.getColumnName(3));
+			while (rs.next()) {
+				System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3));
+			}
+
+		}
+		return rs;
+	}
+	private static ResultSet displayPrerequisite(Connection conn2) throws SQLException {
+		CallableStatement cs = conn.prepareCall("{ call procedures.show_Prerequisite(?) }");
+		cs.registerOutParameter(1, OracleTypes.CURSOR);
+		cs.execute();
+		ResultSet rs = (ResultSet) cs.getObject(1);
+		if (rs != null) {
+			ResultSetMetaData meta = rs.getMetaData();
+			System.out.println(
+					"\n" + meta.getColumnName(1) + "\t" + meta.getColumnName(2) + "\t" + meta.getColumnName(3) + "\t"
+							+ meta.getColumnName(4));
+			while (rs.next()) {
+				System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t"
+						+ rs.getString(4));
+			}
+
+		}
+		return rs;
+	}
+	private static ResultSet displayLogs(Connection conn2) throws SQLException {
+		CallableStatement cs = conn.prepareCall("{ call procedures.show_Logs(?) }");
+		cs.registerOutParameter(1, OracleTypes.CURSOR);
+		cs.execute();
+		ResultSet rs = (ResultSet) cs.getObject(1);
+		if (rs != null) {
+			ResultSetMetaData meta = rs.getMetaData();
+			System.out.println(
+					"\n" + meta.getColumnName(1) + "\t" + meta.getColumnName(2) + "\t" + meta.getColumnName(3) + "\t"
+							+ meta.getColumnName(4) + "\t" + meta.getColumnName(5) + "\t" + meta.getColumnName(6));
+			while (rs.next()) {
+				System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t"
+						+ rs.getString(4) + "\t" + rs.getDouble(5) + "\t" + rs.getString(6));
+			}
+
+		}
+		return rs;
+	}
+	
+	
+	
 
 }
